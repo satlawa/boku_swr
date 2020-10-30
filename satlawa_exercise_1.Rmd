@@ -1,0 +1,114 @@
+---
+title: "satlawa_exercise_1"
+author: "Philipp Satlawa"
+date: "30/10/2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+Start of the exercise 1
+
+Task 1 - Sequences
+
+1. Create a vector and print the vector x (in ascending order)
+```{r}
+(x <- seq(from = 0, to = 40, by = 2))
+```
+
+2. Create a vector and print the vector y
+```{r}
+(y <- sample(x))
+```
+
+3. The values of x and y agree on the following positions:
+```{r}
+length(which(x == y))
+which(x == y)
+```
+
+-------------------------------------------------------------------------------
+
+Task 2 - Sequences
+
+1.
+2.
+3.
+
+-------------------------------------------------------------------------------
+
+Task 3 - Vectors
+
+1.
+```{r}
+x <- 1:100
+print("vecctor x: ")
+print(x)
+set.seed(10)
+y <- sample(1:150, 70, replace = TRUE)
+print("vecctor y: ")
+print(y)
+```
+
+2.
+```{r}
+(setdiff(x,y))
+(length(setdiff(x,y)))
+```
+
+3.
+```{r}
+if(length(y[duplicated(y)]) > 0) {
+  z <- y[duplicated(y)]
+} else {
+  z <- y
+}
+```
+
+4.
+```{r}
+length(z[z %% 3 == 0])
+```
+
+5.
+loop (no use)
+rev (no use)
+sort (just if it is sorted)
+
+-------------------------------------------------------------------------------
+
+Task 4 - Point Estimation
+
+1.
+2.
+3.
+
+-------------------------------------------------------------------------------
+
+Task 5 - Interval Estimation
+
+1.
+2.
+3.

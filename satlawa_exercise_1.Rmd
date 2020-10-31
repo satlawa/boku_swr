@@ -101,14 +101,82 @@ sort (just if it is sorted)
 
 Task 4 - Point Estimation
 
-1.
-2.
-3.
+1. Draw a reproducible sample of size n = 30 from a normal distribution with μ = 5 and
+σ 2 = 4.
+```{r}
+# set.seed
+set.seed(10)
+# draw random sample
+x <- rnorm(30, mean = 5, sd = sqrt(4))
+```
+
+2.Estimate μ and σ 2 on the basis of your sample using the above formulas, i.e. without (!) using
+the functions mean(), var() and sd().
+```{r}
+# mean
+sum(x)/length(x)
+# var
+1/(length(x)-1) * sum((x-mean(x))**2)
+# stddev
+sqrt(1/(length(x)-1) * sum((x-mean(x))**2))
+```
+
+3. Compare your results with the output of the functions mean() and var().
+```{r}
+if(round((1/(length(x)-1) * sum((x-mean(x))**2)),5) == round(var(x),5)) {
+  print("same")
+} else {
+  print("diffrent")
+}
+
+if(round(sqrt(1/(length(x)-1) * sum((x-mean(x))**2)),5) == round(sd(x),5)) {
+  print("same")
+} else {
+  print("diffrent")
+}
+```
+
+4. Are your estimates close to the population values? Repeat the steps 1 and 3 from above with
+a sample of size n = 3000. What do we learn?
+```{r}
+# set.seed
+set.seed(10)
+# draw random sample
+y <- rnorm(3000, mean = 5, sd = sqrt(4))
+print(mean(x))
+print(mean(y))
+```
 
 -------------------------------------------------------------------------------
 
 Task 5 - Interval Estimation
 
 1.
-2.
+```{r}
+# set.seed
+set.seed(10)
+# draw random sample
+x <- rnorm(30, mean = 5, sd = sqrt(4))
+```
+
+2. Calculate a confidence interval for μ and σ 2 for α = 0.05 (hence the confidence level is
+1 − α = 0.95). -functions such as mean(), sd() and var() are allowed.
+looked up in sktiptum t(29;0.975) = 2.045
+also possible in R
+```{r}
+# t-value for n-1 = 29; 1-alpha = 0.975
+qt(0.975,df=29)
+# lower bound mean
+print(mean(x) - 2.045*sd(x)/sqrt(length(x)))
+# upper bound mean
+print(mean(x) + 2.045*sd(x)/sqrt(length(x)))
+
+# chi-value for n-1 = 29; 1-alpha = 0.975
+qchisq(0.975, df=29)
+# lower bound standard dev
+print(((length(x)-1) * var(x)) / qchisq(0.975, df=29))
+# upper bound standard dev
+print(((length(x)-1) * var(x)) / qchisq(0.025, df=29))
+```
+
 3.

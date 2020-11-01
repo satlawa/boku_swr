@@ -53,10 +53,37 @@ which(x == y)
 
 Task 2 - Sequences
 
-1.
-2.
-3.
+1. John Wallis (1616-1703)
+```{r}
+prod((2*i/(2*i-1)) * (2*i/(2*i+1)))*2
+```
 
+2. Gottfried Leibnitz (1646-1716):
+```{r}
+sum(((-1)**(i+1))/(2*i-1))*4
+```
+
+3. Leonhard Euler (1707-1783):
+```{r}
+sqrt(sum(1/i**2)*6)
+```
+
+according to Wikipedia (2020) pi's current approximation is  3.1415926535897932384626433. Hence
+```{r}
+pi <- 3.1415926535897932384626433
+
+diff_JW <- abs(prod((2*i/(2*i-1)) * (2*i/(2*i+1)))*2 - pi)
+diff_GL <- abs(sum(((-1)**(i+1))/(2*i-1))*4 - pi)
+diff_LE <- abs(sqrt(sum(1/i**2)*6) - pi)
+print(diff_JW)
+print(diff_GL)
+print(diff_LE)
+min(diff_JW, diff_GL, diff_LE)
+```
+
+
+Wikipedia (2020)
+https://en.wikipedia.org/wiki/Approximations_of_%CF%80
 -------------------------------------------------------------------------------
 
 Task 3 - Vectors
@@ -96,6 +123,7 @@ length(z[z %% 3 == 0])
 loop (no use)
 rev (no use)
 sort (just if it is sorted)
+sort(x, descending=TRUE)
 
 -------------------------------------------------------------------------------
 

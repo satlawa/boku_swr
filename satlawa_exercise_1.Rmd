@@ -1,210 +1,286 @@
 ---
-title: "satlawa_exercise_1"
-author: "Philipp Satlawa"
-date: "30/10/2020"
-output: pdf_document
+author: "Philipp Satlawa - h0640348"
+date: "06/11/2020"
+title: "Statistics with R - Exercise 1"
+output:
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+This document contains the answered questions of exercise 1 for the course "Statistics with R".
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+***
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+## Task 1 - Sequences
 
-```{r cars}
-summary(cars)
-```
+Creation and comparison of vectors.
 
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
-
-Start of the exercise 1
-
-Task 1 - Sequences
-
-1. Create a vector and print the vector x (in ascending order)
+1. Create a vector `x` that contains the sequence of even numbers from 0 to 40 (`x` $\in$ \rm I\!R)
 ```{r}
 (x <- seq(from = 0, to = 40, by = 2))
 ```
 
-2. Create a vector and print the vector y
+2. Create a vector `y`, which contains the elements of vector `x` but in *random* order (`y` $\in$ `x`)
 ```{r}
+# set seed to produce reproducible results
+set.seed(10)
+# take random samples from the elements of vector x
 (y <- sample(x))
 ```
 
-3. The values of x and y agree on the following positions:
+3. The values of `x` and `y` agree on the following positions:
 ```{r}
+# number of positions the two vectors agree on
 length(which(x == y))
+# indices (positions) on which the values of the two vectors agree on
 which(x == y)
 ```
 
--------------------------------------------------------------------------------
+***
 
-Task 2 - Sequences
+## Task 2 - Sequences
 
-1. John Wallis (1616-1703)
+Verification of three approximation formulas for $\pi$. Since the calculation of $\pi$ by the following formulas includes infinite sums or products, we use a large $n = 10000$.
+
+Creating vector `i` as a sequence from 1 to 100000 (`x` $\in$ \rm I\!R).
 ```{r}
+# create vector i
+i <- 1:10000
+```
+
+1. John Wallis (1616-1703):
+```{r}
+# calculation of pi with the formula of John Wallis
 prod((2*i/(2*i-1)) * (2*i/(2*i+1)))*2
 ```
 
 2. Gottfried Leibnitz (1646-1716):
 ```{r}
+# calculation of pi with the formula of Gottfried Leibnitz
 sum(((-1)**(i+1))/(2*i-1))*4
 ```
 
 3. Leonhard Euler (1707-1783):
 ```{r}
+# calculation of pi with the formula of Leonhard Euler
 sqrt(sum(1/i**2)*6)
 ```
 
-according to Wikipedia (2020) pi's current approximation is  3.1415926535897932384626433. Hence
+To compute the smallest relative deviation from $\pi$ given the vector `i`, we need $\pi$'s current best  approximation. Acording to ikipedia (2020) pi's current best approximation is 3.1415926535897932384626433. 
 ```{r}
+# store pi's current best approximation for comparison
 pi <- 3.1415926535897932384626433
 
-diff_JW <- abs(prod((2*i/(2*i-1)) * (2*i/(2*i+1)))*2 - pi)
-diff_GL <- abs(sum(((-1)**(i+1))/(2*i-1))*4 - pi)
-diff_LE <- abs(sqrt(sum(1/i**2)*6) - pi)
-print(diff_JW)
-print(diff_GL)
-print(diff_LE)
+# calculate the difference between John Wallis (1616-1703) and current pi
+(diff_JW <- abs(prod((2*i/(2*i-1)) * (2*i/(2*i+1)))*2 - pi))
+# calculate the difference between Gottfried Leibnitz (1646-1716) and current pi
+(diff_GL <- abs(sum(((-1)**(i+1))/(2*i-1))*4 - pi))
+# calculate the difference between Leonhard Euler (1707-1783) and current pi
+(diff_LE <- abs(sqrt(sum(1/i**2)*6) - pi))
+
+# get the absolute difference of the formula with the smallest absolute difference
 min(diff_JW, diff_GL, diff_LE)
 ```
 
+Hance, the approximation formula for $\pi$ with the smallest relative deviation for $n = 10000$ is John Wallis (1616-1703) formula.
 
-Wikipedia (2020)
-https://en.wikipedia.org/wiki/Approximations_of_%CF%80
--------------------------------------------------------------------------------
+Wikipedia (2020), https://en.wikipedia.org/wiki/Approximations_of_%CF%80
 
-Task 3 - Vectors
+***
 
-1.
+## Task 3 - Vectors
+
+Creation and manipulation of vectors.
+
+1. Create vector `x` containing the sequence 1 to 100 (`x` $\in$ \rm I\!R) and vector `y` containing a sample of size n = 70 of the sequence 1 to 150 (`y` $\in$ \rm I\!R).
 ```{r}
-x <- 1:100
-print("vecctor x: ")
-print(x)
+# create vector x containing the sequence 1 to 100 (natural numbers)
+(x <- 1:100)
+# set seed to produce reproducible results
 set.seed(10)
-y <- sample(1:150, 70, replace = TRUE)
-print("vecctor y: ")
-print(y)
+# create vector y containing a sample of size n = 70 of the sequence 1 to 150 (natural numbers)
+(y <- sample(1:150, 70, replace = TRUE))
 ```
 
-2.
+2. Determine the amount of elements that are contained in `x` but not in `y`.
 ```{r}
+# elements of x not contained in y
 (setdiff(x,y))
+# number of elements of x not contained in y
 (length(setdiff(x,y)))
 ```
 
-3.
+3. Check for duplicate elements in `y` and depending if there are duplicate elements or not create a different `z`.
 ```{r}
+# check if there are duplicate elements in y
 if(length(y[duplicated(y)]) > 0) {
+  # create a new vector z containing the duplicate elements of y
   z <- y[duplicated(y)]
 } else {
+  # create a new vector z ac a copy of y
   z <- y
 }
 ```
 
-4.
+4. Determine the number of elements of `z` that are multiples of 3.
 ```{r}
+# calculate the number of elements of z that are multiples of 3
 length(z[z %% 3 == 0])
 ```
 
-5.
-loop (no use)
-rev (no use)
-sort (just if it is sorted)
-sort(x, descending=TRUE)
-
--------------------------------------------------------------------------------
-
-Task 4 - Point Estimation
-
-1. Draw a reproducible sample of size n = 30 from a normal distribution with μ = 5 and
-σ 2 = 4.
+5. Revert the `y` without using the function `rev()`.
 ```{r}
-# set.seed
+# revert vector y
+y[length(y):1]
+```
+
+***
+
+## Task 4 - Point Estimation
+
+Assuming a normally distributed population, we create random sample and estimate $\mu$ and $\sigma^{2}$ for this sample.
+
+1. Draw a reproducible sample of size $n = 30$ from a normal distribution with $\mu=5$ and
+$\sigma^{2}=4$.
+```{r}
+# set seed to produce reproducible results
 set.seed(10)
-# draw random sample
-x <- rnorm(30, mean = 5, sd = sqrt(4))
+# draw random sample with n = 30, mu = 5, sigma^2 = 4
+(x <- rnorm(30, mean = 5, sd = sqrt(4)))
 ```
 
-2.Estimate μ and σ 2 on the basis of your sample using the above formulas, i.e. without (!) using
-the functions mean(), var() and sd().
+2.Estimate $\mu$ and $\sigma^{2}$ on the basis of your sample using the formulas to estimate the population mean $\mu$ with the sample mean $\overline{x}$ and the population variance $\sigma^{2}$ with the empirical variance $s^2$, without using the functions `mean()`, `var()` and `sd()`.
 ```{r}
-# mean
-sum(x)/length(x)
-# var
-1/(length(x)-1) * sum((x-mean(x))**2)
-# stddev
-sqrt(1/(length(x)-1) * sum((x-mean(x))**2))
+# calculation of mean
+(sum(x)/length(x))
+# calculation of variance
+(1/(length(x)-1) * sum((x-mean(x))**2))
+# calculation of standard deviation
+(sqrt(1/(length(x)-1) * sum((x-mean(x))**2)))
 ```
 
-3. Compare your results with the output of the functions mean() and var().
+3. Compare your results with the output of the functions `mean()` and `var()`.
 ```{r}
+# compute the mean with inbuilt function mean()
+(mean(x))
+# check if the results of the inbuilt function mean() and the formula for calculating the mean are the same 
+if(round(sum(x)/length(x),5) == round(mean(x),5)) {
+  ("same")
+} else {
+  ("diffrent")
+}  
+# compute the variance with inbuilt function var()
+(var(x))
+# check if the results of the inbuilt function var() and the formula for calculating the variance are the same 
 if(round((1/(length(x)-1) * sum((x-mean(x))**2)),5) == round(var(x),5)) {
-  print("same")
+  ("same")
 } else {
-  print("diffrent")
+  ("diffrent")
 }
-
+# compute the standard variation with inbuilt function sd()
+(sd(x))
+# check if the results of the inbuilt function sd() and the formula for calculating the variance are the same 
 if(round(sqrt(1/(length(x)-1) * sum((x-mean(x))**2)),5) == round(sd(x),5)) {
-  print("same")
+  ("same")
 } else {
-  print("diffrent")
+  ("diffrent")
 }
 ```
 
 4. Are your estimates close to the population values? Repeat the steps 1 and 3 from above with
 a sample of size n = 3000. What do we learn?
 ```{r}
-# set.seed
+# set seed to produce reproducible results
 set.seed(10)
-# draw random sample
-y <- rnorm(3000, mean = 5, sd = sqrt(4))
-print(mean(x))
-print(mean(y))
+# draw random sample with n = 3000, mu = 5, sigma^2 = 4
+x <- rnorm(3000, mean = 5, sd = sqrt(4))
+
+# calculation of mean
+(sum(x)/length(x))
+# calculation of variance
+(1/(length(x)-1) * sum((x-mean(x))**2))
+# calculation of standard deviation
+(sqrt(1/(length(x)-1) * sum((x-mean(x))**2)))
+
+# compute the mean with inbuilt function mean()
+(mean(x))
+# check if the results of the inbuilt function mean() and the formula for calculating the mean are the same 
+if(round(sum(x)/length(x),5) == round(mean(x),5)) {
+  ("same")
+} else {
+  ("diffrent")
+}  
+# compute the variance with inbuilt function var()
+(var(x))
+# check if the results of the inbuilt function var() and the formula for calculating the variance are the same 
+if(round((1/(length(x)-1) * sum((x-mean(x))**2)),5) == round(var(x),5)) {
+  ("same")
+} else {
+  ("diffrent")
+}
+# compute the standard variation with inbuilt function sd()
+(sd(x))
+# check if the results of the inbuilt function sd() and the formula for calculating the variance are the same 
+if(round(sqrt(1/(length(x)-1) * sum((x-mean(x))**2)),5) == round(sd(x),5)) {
+  ("same")
+} else {
+  ("diffrent")
+}
 ```
+The conclusion of the above calculations shows, the higher the sample size $n$ the smaller is the deviation between the sample mean $\overline{x}$ and the population mean $\mu$. The same applies for the variance and standard deviation.
 
--------------------------------------------------------------------------------
+***
 
-Task 5 - Interval Estimation
+## Task 5 - Interval Estimation
 
-1.
+Calculate the confidence intervals for the mean and the variance.
+
+1. Draw a reproducible sample of size $n = 30$ from a normal distribution with $\mu=5$ and
+$\sigma^{2}=4$.
 ```{r}
-# set.seed
+# set seed to produce reproducible results
 set.seed(10)
 # draw random sample
-x <- rnorm(30, mean = 5, sd = sqrt(4))
+(x <- rnorm(30, mean = 5, sd = sqrt(4)))
 ```
 
-2. Calculate a confidence interval for μ and σ 2 for α = 0.05 (hence the confidence level is
-1 − α = 0.95). -functions such as mean(), sd() and var() are allowed.
+2. Calculate a confidence interval for $\mu$ and $\sigma^{2}$ for $\alpha = 0.05$ (hence the confidence level is $1 - \alpha1 = 0.95$). Inbuilt functions such as mean(), sd() and var() are allowed.
 looked up in sktiptum t(29;0.975) = 2.045
-also possible in R
 ```{r}
-# t-value for n-1 = 29; 1-alpha = 0.975
-qt(0.975,df=29)
+# looked up the t-value in the skript t(29;0.975) = 2.045
+# get t-value for n-1 = 29; 1-alpha = 0.975 from an inbuilt R function
+(t <- qt(0.975,df=29))
 # lower bound mean
-print(mean(x) - 2.045*sd(x)/sqrt(length(x)))
+(low_bound_mean <- mean(x) - t * sd(x)/sqrt(length(x)))
 # upper bound mean
-print(mean(x) + 2.045*sd(x)/sqrt(length(x)))
+(up_bound_mean <- mean(x) + t * sd(x)/sqrt(length(x)))
 
-# chi-value for n-1 = 29; 1-alpha = 0.975
-qchisq(0.975, df=29)
+# get chi-value for n-1 = 29; 1-alpha = 0.975
+(qchisq(0.975, df=29))
 # lower bound standard dev
-print(((length(x)-1) * var(x)) / qchisq(0.975, df=29))
+(low_bound_var <- ((length(x)-1) * var(x)) / qchisq(0.975, df=29))
 # upper bound standard dev
-print(((length(x)-1) * var(x)) / qchisq(0.025, df=29))
+(up_bound_var <- ((length(x)-1) * var(x)) / qchisq(0.025, df=29))
 ```
 
-3.
+3. Determine if true parameters lie in the confidence interval.
+```{r}
+# check if the mean lies within the confidence interval of the mean
+if((mean(x) > low_bound_mean) & (mean(x) < up_bound_mean)){
+  ("the mean lies within the confidence interval")
+} else{
+  ("the mean lies outside the confidence interval")
+}
+
+# check if the variance lies within the confidence interval of the variance
+if((var(x) > low_bound_var) & (var(x) < up_bound_var)){
+  ("the variation lies within the confidence interval")
+} else{
+  ("the variation lies outside the confidence interval")
+}
+```
+Yes, in our case the true parameters lie within our confidence intervals. This is true for both the mean and the variance. The mean and the variance are in within the confidence intervals with a 5%probability of error.
+

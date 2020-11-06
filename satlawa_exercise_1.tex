@@ -1,0 +1,913 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Statistics with R - Exercise 1},
+  pdfauthor={Philipp Satlawa - h0640348},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+
+\title{Statistics with R - Exercise 1}
+\author{Philipp Satlawa - h0640348}
+\date{06/11/2020}
+
+\begin{document}
+\maketitle
+
+This document contains the answered questions of exercise 1 for the
+course ``Statistics with R''.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{task-1---sequences}{%
+\subsection{Task 1 - Sequences}\label{task-1---sequences}}
+
+Creation and comparison of vectors.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Create a vector \texttt{x} that contains the sequence of even numbers
+  from 0 to 40 (\texttt{x} \(\in\) \rm I\!R)
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(x <-}\StringTok{ }\KeywordTok{seq}\NormalTok{(}\DataTypeTok{from =} \DecValTok{0}\NormalTok{, }\DataTypeTok{to =} \DecValTok{40}\NormalTok{, }\DataTypeTok{by =} \DecValTok{2}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  0  2  4  6  8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Create a vector \texttt{y}, which contains the elements of vector
+  \texttt{x} but in \emph{random} order (\texttt{y} \(\in\) \texttt{x})
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# set seed to produce reproducible results}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{10}\NormalTok{)}
+\CommentTok{# take random samples from the elements of vector x}
+\NormalTok{(y <-}\StringTok{ }\KeywordTok{sample}\NormalTok{(x))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 20 16 18 30 22 12 14 10 34  4 28 36 24  2 40  8 32 38  6  0 26
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  The values of \texttt{x} and \texttt{y} agree on the following
+  positions:
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# number of positions the two vectors agree on}
+\KeywordTok{length}\NormalTok{(}\KeywordTok{which}\NormalTok{(x }\OperatorTok{==}\StringTok{ }\NormalTok{y))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# indices (positions) on which the values of the two vectors agree on}
+\KeywordTok{which}\NormalTok{(x }\OperatorTok{==}\StringTok{ }\NormalTok{y)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 13 17
+\end{verbatim}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{task-2---sequences}{%
+\subsection{Task 2 - Sequences}\label{task-2---sequences}}
+
+Verification of three approximation formulas for \(\pi\). Since the
+calculation of \(\pi\) by the following formulas includes infinite sums
+or products, we use a large \(n = 10000\).
+
+Creating vector \texttt{i} as a sequence from 1 to 100000 (\texttt{x}
+\(\in\) \rm I\!R).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# create vector i}
+\NormalTok{i <-}\StringTok{ }\DecValTok{1}\OperatorTok{:}\DecValTok{10000}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  John Wallis (1616-1703):
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# calculation of pi with the formula of John Wallis}
+\KeywordTok{prod}\NormalTok{((}\DecValTok{2}\OperatorTok{*}\NormalTok{i}\OperatorTok{/}\NormalTok{(}\DecValTok{2}\OperatorTok{*}\NormalTok{i}\DecValTok{-1}\NormalTok{)) }\OperatorTok{*}\StringTok{ }\NormalTok{(}\DecValTok{2}\OperatorTok{*}\NormalTok{i}\OperatorTok{/}\NormalTok{(}\DecValTok{2}\OperatorTok{*}\NormalTok{i}\OperatorTok{+}\DecValTok{1}\NormalTok{)))}\OperatorTok{*}\DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3.141514
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Gottfried Leibnitz (1646-1716):
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# calculation of pi with the formula of Gottfried Leibnitz}
+\KeywordTok{sum}\NormalTok{(((}\OperatorTok{-}\DecValTok{1}\NormalTok{)}\OperatorTok{**}\NormalTok{(i}\OperatorTok{+}\DecValTok{1}\NormalTok{))}\OperatorTok{/}\NormalTok{(}\DecValTok{2}\OperatorTok{*}\NormalTok{i}\DecValTok{-1}\NormalTok{))}\OperatorTok{*}\DecValTok{4}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3.141493
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Leonhard Euler (1707-1783):
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# calculation of pi with the formula of Leonhard Euler}
+\KeywordTok{sqrt}\NormalTok{(}\KeywordTok{sum}\NormalTok{(}\DecValTok{1}\OperatorTok{/}\NormalTok{i}\OperatorTok{**}\DecValTok{2}\NormalTok{)}\OperatorTok{*}\DecValTok{6}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3.141497
+\end{verbatim}
+
+To compute the smallest relative deviation from \(\pi\) given the vector
+\texttt{i}, we need \(\pi\)'s current best approximation. Acording to
+ikipedia (2020) pi's current best approximation is
+3.1415926535897932384626433.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# store pi's current best approximation for comparison}
+\NormalTok{pi <-}\StringTok{ }\FloatTok{3.1415926535897932384626433}
+
+\CommentTok{# calculate the difference between John Wallis (1616-1703) and current pi}
+\NormalTok{(diff_JW <-}\StringTok{ }\KeywordTok{abs}\NormalTok{(}\KeywordTok{prod}\NormalTok{((}\DecValTok{2}\OperatorTok{*}\NormalTok{i}\OperatorTok{/}\NormalTok{(}\DecValTok{2}\OperatorTok{*}\NormalTok{i}\DecValTok{-1}\NormalTok{)) }\OperatorTok{*}\StringTok{ }\NormalTok{(}\DecValTok{2}\OperatorTok{*}\NormalTok{i}\OperatorTok{/}\NormalTok{(}\DecValTok{2}\OperatorTok{*}\NormalTok{i}\OperatorTok{+}\DecValTok{1}\NormalTok{)))}\OperatorTok{*}\DecValTok{2} \OperatorTok{-}\StringTok{ }\NormalTok{pi))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 7.853491e-05
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# calculate the difference between Gottfried Leibnitz (1646-1716) and current pi}
+\NormalTok{(diff_GL <-}\StringTok{ }\KeywordTok{abs}\NormalTok{(}\KeywordTok{sum}\NormalTok{(((}\OperatorTok{-}\DecValTok{1}\NormalTok{)}\OperatorTok{**}\NormalTok{(i}\OperatorTok{+}\DecValTok{1}\NormalTok{))}\OperatorTok{/}\NormalTok{(}\DecValTok{2}\OperatorTok{*}\NormalTok{i}\DecValTok{-1}\NormalTok{))}\OperatorTok{*}\DecValTok{4} \OperatorTok{-}\StringTok{ }\NormalTok{pi))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1e-04
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# calculate the difference between Leonhard Euler (1707-1783) and current pi}
+\NormalTok{(diff_LE <-}\StringTok{ }\KeywordTok{abs}\NormalTok{(}\KeywordTok{sqrt}\NormalTok{(}\KeywordTok{sum}\NormalTok{(}\DecValTok{1}\OperatorTok{/}\NormalTok{i}\OperatorTok{**}\DecValTok{2}\NormalTok{)}\OperatorTok{*}\DecValTok{6}\NormalTok{) }\OperatorTok{-}\StringTok{ }\NormalTok{pi))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 9.548964e-05
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# get the absolute difference of the formula with the smallest absolute difference}
+\KeywordTok{min}\NormalTok{(diff_JW, diff_GL, diff_LE)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 7.853491e-05
+\end{verbatim}
+
+Hance, the approximation formula for \(\pi\) with the smallest relative
+deviation for \(n = 10000\) is John Wallis (1616-1703) formula.
+
+Wikipedia (2020),
+\url{https://en.wikipedia.org/wiki/Approximations_of_\%CF\%80}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{task-3---vectors}{%
+\subsection{Task 3 - Vectors}\label{task-3---vectors}}
+
+Creation and manipulation of vectors.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Create vector \texttt{x} containing the sequence 1 to 100 (\texttt{x}
+  \(\in\)
+  \rm I\!R) and vector `y` containing a sample of size n = 70 of the sequence 1 to 150 (`y` $\in$ \rm I\!R).
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# create vector x containing the sequence 1 to 100 (natural numbers)}
+\NormalTok{(x <-}\StringTok{ }\DecValTok{1}\OperatorTok{:}\DecValTok{100}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   [1]   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18
+##  [19]  19  20  21  22  23  24  25  26  27  28  29  30  31  32  33  34  35  36
+##  [37]  37  38  39  40  41  42  43  44  45  46  47  48  49  50  51  52  53  54
+##  [55]  55  56  57  58  59  60  61  62  63  64  65  66  67  68  69  70  71  72
+##  [73]  73  74  75  76  77  78  79  80  81  82  83  84  85  86  87  88  89  90
+##  [91]  91  92  93  94  95  96  97  98  99 100
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# set seed to produce reproducible results}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{10}\NormalTok{)}
+\CommentTok{# create vector y containing a sample of size n = 70 of the sequence 1 to 150 (natural numbers)}
+\NormalTok{(y <-}\StringTok{ }\KeywordTok{sample}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{150}\NormalTok{, }\DecValTok{70}\NormalTok{, }\DataTypeTok{replace =} \OtherTok{TRUE}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 137  74 112  72  88  15 143  74  24  13  95 136 110   7  86  82  29  29 121
+## [20]  92  50 109 101 122  33 135  68  93 114  88  51  32  11  79  92  91  42  78
+## [39]  13 105 144 117  26  89  48  15 110  24  61 132  14  35  10  74  58 144  15
+## [58]  31 138 101 101 109  39 118  89  18 131  42 138  79
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Determine the amount of elements that are contained in \texttt{x} but
+  not in \texttt{y}.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# elements of x not contained in y}
+\NormalTok{(}\KeywordTok{setdiff}\NormalTok{(x,y))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]   1   2   3   4   5   6   8   9  12  16  17  19  20  21  22  23  25  27  28
+## [20]  30  34  36  37  38  40  41  43  44  45  46  47  49  52  53  54  55  56  57
+## [39]  59  60  62  63  64  65  66  67  69  70  71  73  75  76  77  80  81  83  84
+## [58]  85  87  90  94  96  97  98  99 100
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# number of elements of x not contained in y}
+\NormalTok{(}\KeywordTok{length}\NormalTok{(}\KeywordTok{setdiff}\NormalTok{(x,y)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 66
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Check for duplicate elements in \texttt{y} and depending if there are
+  duplicate elements or not create a different \texttt{z}.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# check if there are duplicate elements in y}
+\ControlFlowTok{if}\NormalTok{(}\KeywordTok{length}\NormalTok{(y[}\KeywordTok{duplicated}\NormalTok{(y)]) }\OperatorTok{>}\StringTok{ }\DecValTok{0}\NormalTok{) \{}
+  \CommentTok{# create a new vector z containing the duplicate elements of y}
+\NormalTok{  z <-}\StringTok{ }\NormalTok{y[}\KeywordTok{duplicated}\NormalTok{(y)]}
+\NormalTok{\} }\ControlFlowTok{else}\NormalTok{ \{}
+  \CommentTok{# create a new vector z ac a copy of y}
+\NormalTok{  z <-}\StringTok{ }\NormalTok{y}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  Determine the number of elements of \texttt{z} that are multiples of
+  3.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# calculate the number of elements of z that are multiples of 3}
+\KeywordTok{length}\NormalTok{(z[z }\OperatorTok{%%}\StringTok{ }\DecValTok{3} \OperatorTok{==}\StringTok{ }\DecValTok{0}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 6
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{4}
+\tightlist
+\item
+  Revert the \texttt{y} without using the function \texttt{rev()}.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# revert vector y}
+\NormalTok{y[}\KeywordTok{length}\NormalTok{(y)}\OperatorTok{:}\DecValTok{1}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  79 138  42 131  18  89 118  39 109 101 101 138  31  15 144  58  74  10  35
+## [20]  14 132  61  24 110  15  48  89  26 117 144 105  13  78  42  91  92  79  11
+## [39]  32  51  88 114  93  68 135  33 122 101 109  50  92 121  29  29  82  86   7
+## [58] 110 136  95  13  24  74 143  15  88  72 112  74 137
+\end{verbatim}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{task-4---point-estimation}{%
+\subsection{Task 4 - Point Estimation}\label{task-4---point-estimation}}
+
+Assuming a normally distributed population, we create random sample and
+estimate \(\mu\) and \(\sigma^{2}\) for this sample.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Draw a reproducible sample of size \(n = 30\) from a normal
+  distribution with \(\mu=5\) and \(\sigma^{2}=4\).
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# set seed to produce reproducible results}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{10}\NormalTok{)}
+\CommentTok{# draw random sample with n = 30, mu = 5, sigma^2 = 4}
+\NormalTok{(x <-}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(}\DecValTok{30}\NormalTok{, }\DataTypeTok{mean =} \DecValTok{5}\NormalTok{, }\DataTypeTok{sd =} \KeywordTok{sqrt}\NormalTok{(}\DecValTok{4}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 5.0374923 4.6314949 2.2573389 3.8016646 5.5890903 5.7795886 2.5838476
+##  [8] 4.2726480 1.7466546 4.4870432 7.2035590 6.5115630 4.5235329 6.9748894
+## [15] 6.4827803 5.1786945 3.0901123 4.6096992 6.8510425 5.9659570 3.8073787
+## [22] 0.6294263 3.6502681 0.7618776 2.4696040 4.2526769 3.6248891 3.2556823
+## [29] 4.7964780 4.4924389
+\end{verbatim}
+
+2.Estimate \(\mu\) and \(\sigma^{2}\) on the basis of your sample using
+the formulas to estimate the population mean \(\mu\) with the sample
+mean \(\overline{x}\) and the population variance \(\sigma^{2}\) with
+the empirical variance \(s^2\), without using the functions
+\texttt{mean()}, \texttt{var()} and \texttt{sd()}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# calculation of mean}
+\NormalTok{(}\KeywordTok{sum}\NormalTok{(x)}\OperatorTok{/}\KeywordTok{length}\NormalTok{(x))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4.310647
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# calculation of variance}
+\NormalTok{(}\DecValTok{1}\OperatorTok{/}\NormalTok{(}\KeywordTok{length}\NormalTok{(x)}\OperatorTok{-}\DecValTok{1}\NormalTok{) }\OperatorTok{*}\StringTok{ }\KeywordTok{sum}\NormalTok{((x}\OperatorTok{-}\KeywordTok{mean}\NormalTok{(x))}\OperatorTok{**}\DecValTok{2}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3.00578
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# calculation of standard deviation}
+\NormalTok{(}\KeywordTok{sqrt}\NormalTok{(}\DecValTok{1}\OperatorTok{/}\NormalTok{(}\KeywordTok{length}\NormalTok{(x)}\OperatorTok{-}\DecValTok{1}\NormalTok{) }\OperatorTok{*}\StringTok{ }\KeywordTok{sum}\NormalTok{((x}\OperatorTok{-}\KeywordTok{mean}\NormalTok{(x))}\OperatorTok{**}\DecValTok{2}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.733718
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Compare your results with the output of the functions \texttt{mean()}
+  and \texttt{var()}.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# compute the mean with inbuilt function mean()}
+\NormalTok{(}\KeywordTok{mean}\NormalTok{(x))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4.310647
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# check if the results of the inbuilt function mean() and the formula for calculating the mean are the same }
+\ControlFlowTok{if}\NormalTok{(}\KeywordTok{round}\NormalTok{(}\KeywordTok{sum}\NormalTok{(x)}\OperatorTok{/}\KeywordTok{length}\NormalTok{(x),}\DecValTok{5}\NormalTok{) }\OperatorTok{==}\StringTok{ }\KeywordTok{round}\NormalTok{(}\KeywordTok{mean}\NormalTok{(x),}\DecValTok{5}\NormalTok{)) \{}
+\NormalTok{  (}\StringTok{"same"}\NormalTok{)}
+\NormalTok{\} }\ControlFlowTok{else}\NormalTok{ \{}
+\NormalTok{  (}\StringTok{"diffrent"}\NormalTok{)}
+\NormalTok{\}  }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "same"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# compute the variance with inbuilt function var()}
+\NormalTok{(}\KeywordTok{var}\NormalTok{(x))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3.00578
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# check if the results of the inbuilt function var() and the formula for calculating the variance are the same }
+\ControlFlowTok{if}\NormalTok{(}\KeywordTok{round}\NormalTok{((}\DecValTok{1}\OperatorTok{/}\NormalTok{(}\KeywordTok{length}\NormalTok{(x)}\OperatorTok{-}\DecValTok{1}\NormalTok{) }\OperatorTok{*}\StringTok{ }\KeywordTok{sum}\NormalTok{((x}\OperatorTok{-}\KeywordTok{mean}\NormalTok{(x))}\OperatorTok{**}\DecValTok{2}\NormalTok{)),}\DecValTok{5}\NormalTok{) }\OperatorTok{==}\StringTok{ }\KeywordTok{round}\NormalTok{(}\KeywordTok{var}\NormalTok{(x),}\DecValTok{5}\NormalTok{)) \{}
+\NormalTok{  (}\StringTok{"same"}\NormalTok{)}
+\NormalTok{\} }\ControlFlowTok{else}\NormalTok{ \{}
+\NormalTok{  (}\StringTok{"diffrent"}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "same"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# compute the standard variation with inbuilt function sd()}
+\NormalTok{(}\KeywordTok{sd}\NormalTok{(x))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.733718
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# check if the results of the inbuilt function sd() and the formula for calculating the variance are the same }
+\ControlFlowTok{if}\NormalTok{(}\KeywordTok{round}\NormalTok{(}\KeywordTok{sqrt}\NormalTok{(}\DecValTok{1}\OperatorTok{/}\NormalTok{(}\KeywordTok{length}\NormalTok{(x)}\OperatorTok{-}\DecValTok{1}\NormalTok{) }\OperatorTok{*}\StringTok{ }\KeywordTok{sum}\NormalTok{((x}\OperatorTok{-}\KeywordTok{mean}\NormalTok{(x))}\OperatorTok{**}\DecValTok{2}\NormalTok{)),}\DecValTok{5}\NormalTok{) }\OperatorTok{==}\StringTok{ }\KeywordTok{round}\NormalTok{(}\KeywordTok{sd}\NormalTok{(x),}\DecValTok{5}\NormalTok{)) \{}
+\NormalTok{  (}\StringTok{"same"}\NormalTok{)}
+\NormalTok{\} }\ControlFlowTok{else}\NormalTok{ \{}
+\NormalTok{  (}\StringTok{"diffrent"}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "same"
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  Are your estimates close to the population values? Repeat the steps 1
+  and 3 from above with a sample of size n = 3000. What do we learn?
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# set seed to produce reproducible results}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{10}\NormalTok{)}
+\CommentTok{# draw random sample with n = 3000, mu = 5, sigma^2 = 4}
+\NormalTok{x <-}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(}\DecValTok{3000}\NormalTok{, }\DataTypeTok{mean =} \DecValTok{5}\NormalTok{, }\DataTypeTok{sd =} \KeywordTok{sqrt}\NormalTok{(}\DecValTok{4}\NormalTok{))}
+
+\CommentTok{# calculation of mean}
+\NormalTok{(}\KeywordTok{sum}\NormalTok{(x)}\OperatorTok{/}\KeywordTok{length}\NormalTok{(x))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5.002634
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# calculation of variance}
+\NormalTok{(}\DecValTok{1}\OperatorTok{/}\NormalTok{(}\KeywordTok{length}\NormalTok{(x)}\OperatorTok{-}\DecValTok{1}\NormalTok{) }\OperatorTok{*}\StringTok{ }\KeywordTok{sum}\NormalTok{((x}\OperatorTok{-}\KeywordTok{mean}\NormalTok{(x))}\OperatorTok{**}\DecValTok{2}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4.143197
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# calculation of standard deviation}
+\NormalTok{(}\KeywordTok{sqrt}\NormalTok{(}\DecValTok{1}\OperatorTok{/}\NormalTok{(}\KeywordTok{length}\NormalTok{(x)}\OperatorTok{-}\DecValTok{1}\NormalTok{) }\OperatorTok{*}\StringTok{ }\KeywordTok{sum}\NormalTok{((x}\OperatorTok{-}\KeywordTok{mean}\NormalTok{(x))}\OperatorTok{**}\DecValTok{2}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2.035484
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# compute the mean with inbuilt function mean()}
+\NormalTok{(}\KeywordTok{mean}\NormalTok{(x))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5.002634
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# check if the results of the inbuilt function mean() and the formula for calculating the mean are the same }
+\ControlFlowTok{if}\NormalTok{(}\KeywordTok{round}\NormalTok{(}\KeywordTok{sum}\NormalTok{(x)}\OperatorTok{/}\KeywordTok{length}\NormalTok{(x),}\DecValTok{5}\NormalTok{) }\OperatorTok{==}\StringTok{ }\KeywordTok{round}\NormalTok{(}\KeywordTok{mean}\NormalTok{(x),}\DecValTok{5}\NormalTok{)) \{}
+\NormalTok{  (}\StringTok{"same"}\NormalTok{)}
+\NormalTok{\} }\ControlFlowTok{else}\NormalTok{ \{}
+\NormalTok{  (}\StringTok{"diffrent"}\NormalTok{)}
+\NormalTok{\}  }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "same"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# compute the variance with inbuilt function var()}
+\NormalTok{(}\KeywordTok{var}\NormalTok{(x))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4.143197
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# check if the results of the inbuilt function var() and the formula for calculating the variance are the same }
+\ControlFlowTok{if}\NormalTok{(}\KeywordTok{round}\NormalTok{((}\DecValTok{1}\OperatorTok{/}\NormalTok{(}\KeywordTok{length}\NormalTok{(x)}\OperatorTok{-}\DecValTok{1}\NormalTok{) }\OperatorTok{*}\StringTok{ }\KeywordTok{sum}\NormalTok{((x}\OperatorTok{-}\KeywordTok{mean}\NormalTok{(x))}\OperatorTok{**}\DecValTok{2}\NormalTok{)),}\DecValTok{5}\NormalTok{) }\OperatorTok{==}\StringTok{ }\KeywordTok{round}\NormalTok{(}\KeywordTok{var}\NormalTok{(x),}\DecValTok{5}\NormalTok{)) \{}
+\NormalTok{  (}\StringTok{"same"}\NormalTok{)}
+\NormalTok{\} }\ControlFlowTok{else}\NormalTok{ \{}
+\NormalTok{  (}\StringTok{"diffrent"}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "same"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# compute the standard variation with inbuilt function sd()}
+\NormalTok{(}\KeywordTok{sd}\NormalTok{(x))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2.035484
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# check if the results of the inbuilt function sd() and the formula for calculating the variance are the same }
+\ControlFlowTok{if}\NormalTok{(}\KeywordTok{round}\NormalTok{(}\KeywordTok{sqrt}\NormalTok{(}\DecValTok{1}\OperatorTok{/}\NormalTok{(}\KeywordTok{length}\NormalTok{(x)}\OperatorTok{-}\DecValTok{1}\NormalTok{) }\OperatorTok{*}\StringTok{ }\KeywordTok{sum}\NormalTok{((x}\OperatorTok{-}\KeywordTok{mean}\NormalTok{(x))}\OperatorTok{**}\DecValTok{2}\NormalTok{)),}\DecValTok{5}\NormalTok{) }\OperatorTok{==}\StringTok{ }\KeywordTok{round}\NormalTok{(}\KeywordTok{sd}\NormalTok{(x),}\DecValTok{5}\NormalTok{)) \{}
+\NormalTok{  (}\StringTok{"same"}\NormalTok{)}
+\NormalTok{\} }\ControlFlowTok{else}\NormalTok{ \{}
+\NormalTok{  (}\StringTok{"diffrent"}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "same"
+\end{verbatim}
+
+The conclusion of the above calculations shows, the higher the sample
+size \(n\) the smaller is the deviation between the sample mean
+\(\overline{x}\) and the population mean \(\mu\). The same applies for
+the variance and standard deviation.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{task-5---interval-estimation}{%
+\subsection{Task 5 - Interval
+Estimation}\label{task-5---interval-estimation}}
+
+Calculate the confidence intervals for the mean and the variance.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Draw a reproducible sample of size \(n = 30\) from a normal
+  distribution with \(\mu=5\) and \(\sigma^{2}=4\).
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# set seed to produce reproducible results}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{10}\NormalTok{)}
+\CommentTok{# draw random sample}
+\NormalTok{(x <-}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(}\DecValTok{30}\NormalTok{, }\DataTypeTok{mean =} \DecValTok{5}\NormalTok{, }\DataTypeTok{sd =} \KeywordTok{sqrt}\NormalTok{(}\DecValTok{4}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 5.0374923 4.6314949 2.2573389 3.8016646 5.5890903 5.7795886 2.5838476
+##  [8] 4.2726480 1.7466546 4.4870432 7.2035590 6.5115630 4.5235329 6.9748894
+## [15] 6.4827803 5.1786945 3.0901123 4.6096992 6.8510425 5.9659570 3.8073787
+## [22] 0.6294263 3.6502681 0.7618776 2.4696040 4.2526769 3.6248891 3.2556823
+## [29] 4.7964780 4.4924389
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Calculate a confidence interval for \(\mu\) and \(\sigma^{2}\) for
+  \(\alpha = 0.05\) (hence the confidence level is
+  \(1 - \alpha1 = 0.95\)). Inbuilt functions such as mean(), sd() and
+  var() are allowed. looked up in sktiptum t(29;0.975) = 2.045
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# looked up the t-value in the skript t(29;0.975) = 2.045}
+\CommentTok{# get t-value for n-1 = 29; 1-alpha = 0.975 from an inbuilt R function}
+\NormalTok{(t <-}\StringTok{ }\KeywordTok{qt}\NormalTok{(}\FloatTok{0.975}\NormalTok{,}\DataTypeTok{df=}\DecValTok{29}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2.04523
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# lower bound mean}
+\NormalTok{(low_bound_mean <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(x) }\OperatorTok{-}\StringTok{ }\NormalTok{t }\OperatorTok{*}\StringTok{ }\KeywordTok{sd}\NormalTok{(x)}\OperatorTok{/}\KeywordTok{sqrt}\NormalTok{(}\KeywordTok{length}\NormalTok{(x)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3.663266
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# upper bound mean}
+\NormalTok{(up_bound_mean <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(x) }\OperatorTok{+}\StringTok{ }\NormalTok{t }\OperatorTok{*}\StringTok{ }\KeywordTok{sd}\NormalTok{(x)}\OperatorTok{/}\KeywordTok{sqrt}\NormalTok{(}\KeywordTok{length}\NormalTok{(x)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4.958028
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# get chi-value for n-1 = 29; 1-alpha = 0.975}
+\NormalTok{(}\KeywordTok{qchisq}\NormalTok{(}\FloatTok{0.975}\NormalTok{, }\DataTypeTok{df=}\DecValTok{29}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 45.72229
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# lower bound standard dev}
+\NormalTok{(low_bound_var <-}\StringTok{ }\NormalTok{((}\KeywordTok{length}\NormalTok{(x)}\OperatorTok{-}\DecValTok{1}\NormalTok{) }\OperatorTok{*}\StringTok{ }\KeywordTok{var}\NormalTok{(x)) }\OperatorTok{/}\StringTok{ }\KeywordTok{qchisq}\NormalTok{(}\FloatTok{0.975}\NormalTok{, }\DataTypeTok{df=}\DecValTok{29}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.906458
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# upper bound standard dev}
+\NormalTok{(up_bound_var <-}\StringTok{ }\NormalTok{((}\KeywordTok{length}\NormalTok{(x)}\OperatorTok{-}\DecValTok{1}\NormalTok{) }\OperatorTok{*}\StringTok{ }\KeywordTok{var}\NormalTok{(x)) }\OperatorTok{/}\StringTok{ }\KeywordTok{qchisq}\NormalTok{(}\FloatTok{0.025}\NormalTok{, }\DataTypeTok{df=}\DecValTok{29}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5.431995
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Determine if true parameters lie in the confidence interval.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# check if the mean lies within the confidence interval of the mean}
+\ControlFlowTok{if}\NormalTok{((}\KeywordTok{mean}\NormalTok{(x) }\OperatorTok{>}\StringTok{ }\NormalTok{low_bound_mean) }\OperatorTok{&}\StringTok{ }\NormalTok{(}\KeywordTok{mean}\NormalTok{(x) }\OperatorTok{<}\StringTok{ }\NormalTok{up_bound_mean))\{}
+\NormalTok{  (}\StringTok{"the mean lies within the confidence interval"}\NormalTok{)}
+\NormalTok{\} }\ControlFlowTok{else}\NormalTok{\{}
+\NormalTok{  (}\StringTok{"the mean lies outside the confidence interval"}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "the mean lies within the confidence interval"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# check if the variance lies within the confidence interval of the variance}
+\ControlFlowTok{if}\NormalTok{((}\KeywordTok{var}\NormalTok{(x) }\OperatorTok{>}\StringTok{ }\NormalTok{low_bound_var) }\OperatorTok{&}\StringTok{ }\NormalTok{(}\KeywordTok{var}\NormalTok{(x) }\OperatorTok{<}\StringTok{ }\NormalTok{up_bound_var))\{}
+\NormalTok{  (}\StringTok{"the variation lies within the confidence interval"}\NormalTok{)}
+\NormalTok{\} }\ControlFlowTok{else}\NormalTok{\{}
+\NormalTok{  (}\StringTok{"the variation lies outside the confidence interval"}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "the variation lies within the confidence interval"
+\end{verbatim}
+
+Yes, in our case the true parameters lie within our confidence
+intervals. This is true for both the mean and the variance. The mean and
+the variance are in within the confidence intervals with a
+5\%probability of error.
+
+\end{document}

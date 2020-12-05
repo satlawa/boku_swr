@@ -1,0 +1,20 @@
+---
+title: "Statistics with R - Exercise 2"
+author: "Philipp Satlawa - h0640348"
+date: "04/12/2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This document contains the answered questions of exercise 1 for the course "Statistics with R".
+
+***
+
+## Task 1 - Robustness of mean/median
+
+## Task 2 - Estimation
+
+## Task 3 - Working with a real data set

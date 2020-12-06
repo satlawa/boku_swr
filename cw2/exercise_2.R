@@ -1,3 +1,8 @@
+# install library
+install.packages("data.table")
+# load library
+library("data.table")
+
 ### TASK 3
 
 ## 1. load data
@@ -35,11 +40,25 @@ summary(dat)
 
 # NA in values 5284 records
 
+# convert to data.table
+datCO2 <- setDT(dat)
+
+
 ## 4. create vector out of column and select randomly 2 countries
 
-geo_col <- unique(dat[,'geo'])
+geo_col <- datCO2[, unique(geo)]
 geo_c <- sample(geo_col, 2)
 
 ## 5. filter data
+datFilter <- datCO2[unit == "THS_T" & 
+                      airpol == "GHG" & 
+                      airemsect %in% c("CRF3", "CRF31", "CRF1A3") & 
+                      geo %in% geo_c]
 
-dat[(dat["unit"]=="THS_T") & (dat["airpol"]=="GHG"),]
+## 6. remove columns unit and airpol
+datFilter <- datFilter[, -c("unit", "airpol")]
+
+## 7. observations per country
+datFilter[, .N, by = geo]
+
+

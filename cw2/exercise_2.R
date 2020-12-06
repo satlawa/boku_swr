@@ -48,6 +48,7 @@ datCO2 <- setDT(dat)
 
 geo_col <- datCO2[, unique(geo)]
 geo_c <- sample(geo_col, 2)
+#levels(eye_colors_fac)
 
 ## 5. filter data
 datFilter <- datCO2[unit == "THS_T" & 
@@ -61,4 +62,18 @@ datFilter <- datFilter[, -c("unit", "airpol")]
 ## 7. observations per country
 datFilter[, .N, by = geo]
 
+## 8. rename
 
+
+## 9. average greenhouse emissions per sector
+datFilter[,.(mean(values)), by = airemsect, ]
+
+## 10. average greenhouse emissions per sector and country
+datFilter[,.(mean(values)), by = .(airemsect, geo)]
+
+## 11. sum of greenhouse emissions in the "Livestock" sector per country
+datFilter[airemsect == "CRF31" & time %between% c(2000, 2017), .(sum(values)), by = .(geo)]
+
+## 12. plot
+library(ggplot2)
+ggplot(data=datFilter[airemsect == "CRF31"], aes(x=time, y=values, color=geo)) + geom_line()

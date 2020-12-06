@@ -1,9 +1,81 @@
-# install library
+install.packages("matrixStats")
 install.packages("data.table")
-# load library
-library("data.table")
+
+### TASK 1 – Robustness of mean/median
+library("matrixStats")
+
+## 1. compare mean and median - without outliers
+set.seed(123)
+x <- rnorm(n = 50 * 1000, mean = 0, sd = 1)
+# matrix with 1000 rows (N) and 50 columns (n)
+X <- matrix(x, ncol = 50)
+
+# calculate the mean for every sample
+xAvg <- rowMeans(X)
+
+# calculate the median for every sample
+xMed <- rowMedians(X)
+
+boxplot(xAvg, xMed)
+#ggplot(mpg, aes(class, hwy)) + geom_boxplot()
+
+# The mean estimation method provides a much better result from a normal distribution without outlies are in the dataset
+
+## 2. compare mean and median - with outliers
+set.seed(123)
+
+# sample from normal distribution (95%) and sample from Exponential Distribution (5%)
+x95 <- rnorm(n = 45 * 1000, mean = 0, sd = 1)
+x05 <- rexp(n = 5 * 1000, rate = 0.2)
+
+# rearrange vector to a matrix
+x95 <- matrix(x95, ncol = 45)
+x05 <- matrix(x05, ncol = 5)
+
+# concatenate the two matrices
+X <- cbind(x95,x05)
+
+# calculate the mean for every sample
+xAvg <- rowMeans(X)
+
+# calculate the median for every sample
+xMed <- rowMedians(X)
+
+boxplot(xAvg, xMed)
+
+# The median estimation method provides a much better result in the case outlies are in the dataset
+
+
+
+### TASK 2 – Estimation
+
+## 1. Standard Cauchy Distribution with diffrent sample sizes
+cuy100 = rcauchy(100, location = 0, scale = 1)
+cuy5000 = rcauchy(5000, location = 0, scale = 1)
+cuy100000 = rcauchy(100000, location = 0, scale = 1)
+
+(mean(cuy100))
+(mean(cuy5000))
+(mean(cuy100000))
+
+(var(cuy100))
+(var(cuy5000))
+(var(cuy100000))
+
+## 2.
+
+## 3.
+par(mfrow = c(1,2))
+boxplot(rnorm(n = 100, mean = 0, sd = 1)) # ... function for normal boxplot
+boxplot(rcauchy(n = 100, location = 0, scale = 1)) # ... function for cauchy boxplot
+par(mfrow = c(1,1))
+
+# The Standard Cauchy Distribution creates more outliers the bell curve is much wider compared to the normal distribution
+
+
 
 ### TASK 3
+library("data.table")
 
 ## 1. load data
 

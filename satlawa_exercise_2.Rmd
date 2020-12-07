@@ -9,7 +9,7 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-This document contains the answered questions of exercise 1 for the course "Statistics with R".
+This document contains the answered questions of exercise 2 for the course "Statistics with R".
 
 ***
 
@@ -18,3 +18,110 @@ This document contains the answered questions of exercise 1 for the course "Stat
 ## Task 2 - Estimation
 
 ## Task 3 - Working with a real data set
+
+```{r}
+#load library data.table
+library("data.table")
+```
+
+
+1. Import data from different sources
+
+  import from file .Rdata (R specific file type)
+```{r}
+# load data from file
+load("~/Documents/boku/statistics_with_R/ex_02/CO2.Rdata")
+# convert data.frame to data.table
+datCO2 <- setDT(dat)
+# check if data was properly loaded
+str(dat)
+```
+
+  import from file .csv (comma separated values)
+
+  import from file .txt (tabulator separated values)
+
+  import from file .xlsx (MS Excel specific file type)
+
+
+2. Set seed to the student id
+```{r}
+# prepare seed
+set.seed(as.numeric(format(Sys.time(), "%H%M%S")))
+# set student id
+id <- 640348
+# set seed with student id
+set.seed(id)
+```
+
+
+3. Data exploration
+```{r}
+# show the data structure
+str(dat)
+# show the data summary
+summary(dat)
+```
+The provided dataset contains 6 variables (columns) and 1619494 records (rows).
+The variables have the following types:
+  * unit     : categorical Factor with 2 levels (unit abriviation)
+  * airpol   : categorical Factor with 11 levels (chemical compound)
+  * airemsect: categorical Factor with 172 levels (code for the sector)
+  * geo      : categorical Factor with 35 levels (country abrivation)
+  * time     : discrete numerical  (year)
+  * values   : continuous numerical (the value)
+  
+The variable values has 5284 NA values and is the only variable that contains NA.
+
+
+4. Select randomly two countries
+```{r}
+# create vector with all countries
+geo_col <- datCO2[, unique(geo)]
+# take 2 random samples
+geo_c <- sample(geo_col, 2)
+```
+
+
+5. Filter data
+```{r}
+# filter data
+datFilter <- datCO2[unit == "THS_T" & 
+                      airpol == "GHG" & 
+                      airemsect %in% c("CRF3", "CRF31", "CRF1A3") & 
+                      geo %in% geo_c]
+```
+
+
+6. Remove columns/variables unit and airpol
+```{r}
+# remove variables
+datFilter <- datFilter[, -c("unit", "airpol")]
+```
+
+
+7. Show records per country
+```{r}
+# 
+datFilter[, .N, by = geo]
+```
+Both randomly picked countries have 84 observations.
+
+
+8. Rename categorical values in the variable airemsect
+```{r}
+# 
+datFilter[airemsect == "CRF1A3", airemsect := "Transport"]
+datFilter[airemsect == "CRF3", airemsect := "Agriculture"]
+datFilter[airemsect == "CRF31", airemsect := "Livestock"]
+#datFilter[, .(sector = airemsect)]
+```
+
+
+9. Calculate the average greenhouse gas emission in each sector. Which sector on average produced the
+most greenhouse gas emissions?
+10. Calculate the average greenhouse gas(GHG) emissions in different sectors for each country. Which
+country has a higher average greenhouse gas emissions of ”Livestock”? By how much?
+11. How much GHG did sector "Livestock" produce in each country for the period 2000-2017?
+12. Make a plot (similar to the one below) with two separate lines (for each country) showing the values
+of GHG emissions of ”Transportation” sector through years.

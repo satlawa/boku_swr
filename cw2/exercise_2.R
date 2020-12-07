@@ -135,6 +135,9 @@ datFilter <- datFilter[, -c("unit", "airpol")]
 datFilter[, .N, by = geo]
 
 ## 8. rename
+datFilter[airemsect == "CRF1A3", airemsect := "Transport"]
+datFilter[airemsect == "CRF3", airemsect := "Agriculture"]
+datFilter[airemsect == "CRF31", airemsect := "Livestock"]
 
 
 ## 9. average greenhouse emissions per sector
@@ -144,8 +147,8 @@ datFilter[,.(mean(values)), by = airemsect, ]
 datFilter[,.(mean(values)), by = .(airemsect, geo)]
 
 ## 11. sum of greenhouse emissions in the "Livestock" sector per country
-datFilter[airemsect == "CRF31" & time %between% c(2000, 2017), .(sum(values)), by = .(geo)]
+datFilter[airemsect == "Livestock" & time %between% c(2000, 2017), .(sum(values)), by = .(geo)]
 
 ## 12. plot
 library(ggplot2)
-ggplot(data=datFilter[airemsect == "CRF31"], aes(x=time, y=values, color=geo)) + geom_line()
+ggplot(data=datFilter[airemsect == "Transport"], aes(x=time, y=values, color=geo)) + geom_line()

@@ -1,3 +1,5 @@
-# boku_swr
+# Statistics with R
 
-R code answering the questions
+descriptive statistics
+confidence interval
+hypothesis testing
